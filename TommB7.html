@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TommyB's 7+ Tracker</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      background-color: #ffffff;
+      color: #1d1d1f;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      margin-top: 10%;
+      color: #1d1d1f;
+    }
+    .highlight {
+      color: #ff3b30;
+    }
+    .timer {
+      font-size: 2rem;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #1d1d1f;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+    .reset-button {
+      margin-top: 30px;
+      padding: 12px 30px;
+      font-size: 1rem;
+      background-color: #ff3b30;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: background-color 0.3s ease;
+    }
+    .reset-button:hover {
+      background-color: #d32f2f;
+    }
+    .divider {
+      width: 60%;
+      height: 1px;
+      background-color: #e0e0e0;
+      margin: 40px auto;
+    }
+    .rating {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 0.9rem;
+      color: #6e6e73;
+    }
+  </style>
+</head>
+<body>
+  <h1>Days Since <span class="highlight">TommyB</span> Dated a Certified 7+</h1>
+  <div class="timer" id="timer">0 days, 0 hours, 0 minutes, 0 seconds</div>
+  <div>
+    <button class="reset-button" id="reset-button">Reset Timer</button>
+  </div>
+  <div class="divider"></div>
+  <div class="rating" id="rating">Last committee-certified girl rating: 7.5</div>
+
+  <script>
+    let startDate = new Date(localStorage.getItem('startDate') || new Date());
+    const timerEl = document.getElementById('timer');
+    const resetButton = document.getElementById('reset-button');
+    const ratingEl = document.getElementById('rating');
+
+    function updateTimer() {
+      const now = new Date();
+      const diff = now - startDate;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      timerEl.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds`;
+    }
+
+    resetButton.addEventListener('click', () => {
+      const password = prompt("Enter the password to reset the timer:");
+      if (password === "MisterFantastic") { // Replace "your_password_here" with your chosen password
+        startDate = new Date();
+        localStorage.setItem('startDate', startDate);
+        const newRating = prompt("Update the last committee-certified girl rating (0-10):");
+        if (newRating && !isNaN(newRating) && newRating >= 0 && newRating <= 10) {
+          ratingEl.textContent = `Last committee-certified girl rating: ${newRating}`;
+        }
+      } else {
+        alert("Incorrect password. Timer reset denied.");
+      }
+    });
+
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>
